@@ -1,9 +1,15 @@
 /*jshint esversion: 6*/
 const express = require('express');
+const mongoose = require('mongoose');
 const server = express();
+const {mongoURI} = require('./credentials');
 const morgan = require('morgan');
 const cors = require('cors');
 const port = process.env.PORT || 8080;
+
+mongoose.connect(mongoURI, {
+  useMongoClient: true
+});
 const userRouter = require('./routers/user.router');
 const postRouter = require('./routers/post.router');
 
