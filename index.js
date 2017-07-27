@@ -3,18 +3,27 @@ const express = require('express');
 const mongoose = require('mongoose');
 const server = express();
 const {mongoURI} = require('./credentials');
-const morgan = require('morgan');
-const cors = require('cors');
 const port = process.env.PORT || 8080;
 
 mongoose.connect(mongoURI, {
   useMongoClient: true
 });
+//middleware imports
+const morgan = require('morgan');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+
+//router imports
 const userRouter = require('./routers/user.router');
 const postRouter = require('./routers/post.router');
 
-server.use(morgan('dev'));
+//wire up the middleware
 server.use(cors());
+server.use(morgan('dev'));
+server.use(bodyParser.json());
+server.use(bodyParser.urlencoded({extended: true}));
+
+//wire up the routers
 server.use(userRouter);
 server.use(postRouter);
 
