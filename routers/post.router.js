@@ -1,9 +1,15 @@
 /*jshint esversion: 6*/
 const express = require('express');
 const router = express.Router();
+const Post = require('../models/post.model');
 
 router.get('/posts', (req,res) => {
-  res.send('getting all dem posts');
+  Post.find({}, function (err, posts) {
+    if(err) return res.status(500).json({err: err});
+    return res.status(500).json({
+      posts: posts
+    });
+  });
 });
 
 router.get('/posts/:postId', (req, res) => {
