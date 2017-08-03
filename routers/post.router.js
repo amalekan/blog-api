@@ -31,7 +31,7 @@ router.post('/posts', (req, res) => {
   });
 });
 
-router.put('/posts', (req, res) => {
+router.put('/posts/:postId', (req, res) => {
   Post.findOneAndUpdate({ _id: req.params.postId}, req.body, function (err, post) {
     if(err) return res.status(500).json({err: err});
     return res.status(200).json({
